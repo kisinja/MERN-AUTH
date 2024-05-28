@@ -1,10 +1,16 @@
+import { Outlet } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import Header from "./components/Header";
 
 const App = () => {
   return (
-    <div className="text-white bg-black text-center font-bold text-5xl p-4">
-      App
-    </div>
-  )
-}
+    <>
+      <Header />
+      <Container className="my-2">
+        <Outlet />
+      </Container>
+    </>
+  );
+};
 
 export default App
