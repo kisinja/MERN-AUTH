@@ -1,3 +1,21 @@
-body{
-    background-color: antiquewhite;
+body {
+    background: url("https://i.pinimg.com/564x/0e/89/c7/0e89c7c3286b8d770901fcd3b2dbb8f0.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
+
+/* .container {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+form {
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+} */
