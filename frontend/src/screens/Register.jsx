@@ -13,7 +13,7 @@ const Register = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log('submit');
+        alert("Feature coming soon");
     };
 
     return (
@@ -58,7 +58,7 @@ const Register = () => {
                 </Form.Group>
 
                 <Button type="submit" variant="primary" className="mt-3">
-                    Sign Up
+                    Create Account
                 </Button>
 
                 <Row className="py-3">
