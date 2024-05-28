@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import User from '../models/User.js';
 
-// @desc  Protect routes
+// @desc  Protect routes middleware
 const protect = asyncHandler(async (req, res, next) => {
     let token;
 
