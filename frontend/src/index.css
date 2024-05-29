@@ -6,6 +6,22 @@ body {
     background-position: center;
 }
 
+.profileBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.profileBtn:hover {
+    background: #000;
+    opacity: 1;
+}
+
 /* .container {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 20px;

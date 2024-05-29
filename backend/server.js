@@ -1,5 +1,6 @@
 // Global Imports
 import express from 'express';
+import path from 'path';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -29,10 +30,17 @@ app.use(morgan('dev'));
 // Routes for Users
 app.use("/api/users", user);
 
-// Default Route
-app.get('/', (req, res) => {
-    res.send('Server is ready');
-});
+// Production Configuration
+if (process.env.NODE_ENV === 'production') {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, 'frontend/dist')));
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html')));
+} else {
+    // Default Route
+    app.get('/', (req, res) => {
+        res.send('Server is ready');
+    });
+}
 
 // Error Handling Middleware
 app.use(notFound);

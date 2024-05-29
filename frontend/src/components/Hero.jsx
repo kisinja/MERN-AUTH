@@ -1,7 +1,28 @@
 import { Container, Card, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../slices/usersApiSlice';
+import { logout } from '../slices/authSlice';
 
 const Hero = () => {
+
+    const { userInfo } = useSelector(state => state.auth);
+
+    const [logoutApiCall] = useLogoutMutation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const logoutHandler = async () => {
+        try {
+            await logoutApiCall().unwrap();
+            dispatch(logout());
+            navigate('/login');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className=' py-5'>
             <Container className='d-flex justify-content-center'>
@@ -12,18 +33,39 @@ const Hero = () => {
                         an HTTP-Only cookie. It also uses Redux Toolkit and the React
                         Bootstrap library
                     </p>
-                    <div className='d-flex'>
-                        <LinkContainer to="/login">
-                            <Button variant='primary' className='me-3'>
-                                Sign In
-                            </Button>
-                        </LinkContainer>
-                        <LinkContainer to="/register">
-                            <Button variant='secondary'>
-                                Sign Up
-                            </Button>
-                        </LinkContainer>
-                    </div>
+                    {
+                        userInfo ? (
+                            <>
+                                <div>
+                                    <LinkContainer to="/profile">
+                                        <button className='profileBtn'>
+                                            Profile
+                                        </button>
+                                    </LinkContainer>
+                                    <LinkContainer onClick={logoutHandler}>
+                                        <button className='logoutBtn'>
+                                            Log Out
+                                        </button>
+                                    </LinkContainer>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className='d-flex'>
+                                    <LinkContainer to="/login">
+                                        <Button variant='primary' className='me-3'>
+                                            Sign In
+                                        </Button>
+                                    </LinkContainer>
+                                    <LinkContainer to="/register">
+                                        <Button variant='secondary'>
+                                            Sign Up
+                                        </Button>
+                                    </LinkContainer>
+                                </div>
+                            </>
+                        )
+                    }
                 </Card>
             </Container>
         </div>
