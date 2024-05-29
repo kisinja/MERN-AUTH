@@ -30,6 +30,7 @@ app.use(morgan('dev'));
 // Routes for Users
 app.use("/api/users", user);
 
+
 // Production Configuration
 if (process.env.NODE_ENV === 'production') {
     const __dirname = path.resolve();
