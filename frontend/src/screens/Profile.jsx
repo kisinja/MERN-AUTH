@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import {  useNavigate } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
-import { useRegisterMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
+import { useUpdateUserMutation } from "../slices/usersApiSlice";
 
 
-const Register = () => {
+const Profile = () => {
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -22,14 +22,12 @@ const Register = () => {
 
     const { userInfo } = useSelector(state => state.auth);
 
-    const [register, { isLoading }] = useRegisterMutation();
+    const [updateUser, { isLoading }] = useUpdateUserMutation();
 
     useEffect(() => {
-        if (userInfo) {
-            navigate('/');
-            toast.info('You are already logged in');
-        }
-    }, [navigate, userInfo]);
+        setUsername(userInfo.username);
+        setEmail(userInfo.email);
+    }, [userInfo.setUsername, userInfo.setEmail]);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -37,9 +35,10 @@ const Register = () => {
             toast.error('Passwords do not match');
         } else {
             try {
-                const res = await register({ username, email, password }).unwrap();
+                const res = await updateUser({ _id: userInfo._id, username, email, password }).unwrap();
                 dispatch(setCredentials({ ...res }));
-                navigate('/');
+                toast.success('Profile Updated Successfully');
+                navigate('/profile');
             } catch (error) {
                 toast.error(error?.data?.message || error.error);
             }
@@ -48,7 +47,7 @@ const Register = () => {
 
     return (
         <FormContainer>
-            <h1>Sign Up</h1>
+            <h1>Update Profile</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group className="my-2" controlId='username'>
                     <Form.Label>Username</Form.Label>
@@ -90,17 +89,11 @@ const Register = () => {
                 {isLoading && <Loader />}
 
                 <Button type="submit" variant="primary" className="mt-3">
-                    Create Account
+                    Update
                 </Button>
-
-                <Row className="py-3">
-                    <Col>
-                        Already have an account ? <Link to="/login">Login</Link>
-                    </Col>
-                </Row>
             </Form>
         </FormContainer>
     )
 }
 
-export default Register;
+export default Profile;

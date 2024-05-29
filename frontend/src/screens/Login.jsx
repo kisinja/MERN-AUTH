@@ -24,6 +24,7 @@ const Login = () => {
     useEffect(() => {
         if (userInfo) {
             navigate('/');
+            toast.info('You are already logged in');
         }
     }, [navigate, userInfo]);
 
@@ -32,6 +33,7 @@ const Login = () => {
         try {
             const res = await login({ email, password }).unwrap();
             dispatch(setCredentials({ ...res }));
+            toast.success('Logged In Successfully');
             navigate('/');
         } catch (error) {
             toast.error(error?.data?.message || error.error);
